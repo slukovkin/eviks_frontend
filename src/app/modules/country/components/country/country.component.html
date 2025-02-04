@@ -1,0 +1,40 @@
+<div class="flex flex-row gap-2">
+  <div class="w-full">
+    <button class="btn btn-action w-full my-1"
+            routerLink="/new_country">Добавить страну
+    </button>
+    <table class="mx-auto w-full items-center">
+      <tr class="w-full grid grid-cols-3 px-4 py-1 justify-between
+    border border-slate-500 h-[50px] items-center">
+        <th>Код</th>
+        <th>Наименование</th>
+        <th>Действие</th>
+      </tr>
+      @for (country of countryService.countries; track country.id) {
+        @if (country) {
+          <tr stopPropagation
+              class="grid grid-cols-3 mt-1 px-4 py-2 text-lg text-center
+        items-center cursor-pointer select-none border-b border-slate-500"
+          >
+            <td>{{ country.code }}</td>
+            <td>{{ country.title }}</td>
+            <td>
+              <fa-icon [icon]="editIcon" class="px-2 text-amber-600 cursor-pointer"
+                       stopPropagation
+                       (click)="update(country)"
+              ></fa-icon>
+              <fa-icon [icon]="deleteIcon" class="px-2 text-red-600 cursor-pointer "
+                       stopPropagation
+                       (click)="delete(country?.id!)"
+              ></fa-icon>
+            </td>
+          </tr>
+        } @else {
+          <div class="grid w-[300px] text-center">
+            <h4 class="text-white text-center">Данных нет</h4>
+          </div>
+        }
+      }
+    </table>
+  </div>
+</div>

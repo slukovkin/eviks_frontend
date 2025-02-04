@@ -1,0 +1,65 @@
+<form (ngSubmit)="submit()" [formGroup]="currencyForm">
+  <div class="flex flex-col text-center mx-auto my-6">
+    <div>
+      <div class="grid mx-auto mt-2 text-start">
+        <label for="code">Код валюты</label>
+        <input
+          class="input"
+          formControlName="code"
+          [defaultValue]="currency?.code"
+          [readOnly]="!!currency?.id"
+          required
+          type="text" id="code" placeholder="Код валюты...">
+      </div>
+      <div
+        *ngIf="currencyForm.controls['code'].hasError('required')
+          && currencyForm.controls['code'].touched"
+        class="grid mx-auto mt-1 text-start">
+        <span class="text-red-600">Required field</span>
+      </div>
+      <div class="grid mx-auto  mt-2 text-start">
+        <label for="name">Наименование валюты</label>
+        <input
+          formControlName="name"
+          [defaultValue]="currency?.name"
+          class="input"
+          type="text" id="name" placeholder="Наименование валюты...">
+      </div>
+      <div
+        *ngIf="currencyForm.controls['name'].hasError('required')
+          && currencyForm.controls['name'].touched"
+        class="grid mx-auto mt-1 text-start">
+        <span class="text-red-600">Required field</span>
+      </div>
+      <div class="grid mx-auto  mt-2 text-start">
+        <label for="rate">Курс валюты</label>
+        <input
+          formControlName="rate"
+          [defaultValue]="currency?.rate"
+          class="input"
+          type="text" id="rate" placeholder="Курс валюты...">
+      </div>
+      <div
+        *ngIf="currencyForm.controls['name'].hasError('required')
+          && currencyForm.controls['name'].touched"
+        class="grid mx-auto mt-1 text-start">
+        <span class="text-red-600">Required field</span>
+      </div>
+
+      <div class="text-center mt-3 mx-auto">
+        <button
+          stopPropagation
+          class="btn btn-action my-1 py-3 w-full"
+          [disabled]="this.currencyForm.invalid"
+          type="submit"
+        >Сохранить
+        </button>
+        @if (!currency?.id) {
+          <button stopPropagation class="btn btn-orange my-1 py-3 w-full" (click)="exit()">Отменить
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</form>
+

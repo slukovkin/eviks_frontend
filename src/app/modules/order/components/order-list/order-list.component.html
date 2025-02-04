@@ -1,0 +1,17 @@
+<div class="my-1">
+  <table class="w-full">
+    <tr class="w-full grid grid-cols-7 px-4 py-1 justify-between
+    border border-slate-500 h-[50px] items-center">
+      <th>Номер заказа</th>
+      <th>Статус заказа</th>
+      <th>Клиент</th>
+      <th>Город доставки</th>
+      <th>Отделение НП</th>
+      <th>Сумма заказа</th>
+      <th>Действие</th>
+    </tr>
+    @for (order of this.documentService.orders; track order.id) {
+      <app-order-card [order]="order"></app-order-card>
+    }
+  </table>
+</div>

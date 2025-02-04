@@ -1,0 +1,26 @@
+<div class="card-body">
+  <h6>Настройка SMS сервиса </h6>
+  <form id="sms" name="sms">
+    <div class="form-group grid mx-2">
+      <label for="smstype">Севис</label>
+      <mat-select id="smstype" class="py-2 border border-gray-400 rounded-md px-2" value="0">
+        <mat-option value="0">Не выбрано</mat-option>
+        <mat-option value="1">SMS</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="form-group grid mx-2 mt-2">
+      <label for="smstestphone">Телефон</label>
+      <input class="input" id="smstestphone" name="smstestphone">
+
+    </div>
+    <div class="form-group grid mx-2 m-2">
+      <label for="smstesttext">Уведомления</label>
+      <input class="input" id="smstesttext" name="smstesttext">
+    </div>
+
+    <input type="hidden" name="q" id="sms_q"><input type="hidden" name="sms_q" value="">
+    <input type="submit" name="sms_s" id="sms_s" style="display:none">
+  </form>
+</div>
+

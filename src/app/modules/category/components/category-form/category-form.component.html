@@ -1,0 +1,53 @@
+<form (ngSubmit)="submit()" [formGroup]="categoryForm">
+  <div class="flex flex-col text-center mx-auto my-6">
+    <div>
+      <div class="grid mx-auto mt-2 text-start">
+        <label for="title">Наименование категории</label>
+        <input
+          class="input"
+          formControlName="title"
+          [defaultValue]="category?.title"
+          [readOnly]="!!category?.id"
+          required
+          type="text" id="title" placeholder="Наименование категории...">
+      </div>
+      <div
+        *ngIf="categoryForm.controls['title'].hasError('required')
+          && categoryForm.controls['title'].touched"
+        class="grid mx-auto mt-1 text-start">
+        <span class="text-red-600">Required field</span>
+      </div>
+      <div class="grid mx-auto  mt-2 text-start">
+        <label for="description">Описание категории</label>
+        <input
+          formControlName="description"
+          [defaultValue]="category?.description"
+          class="input"
+          type="text" id="description" placeholder="Описание категории...">
+      </div>
+      <div class="grid mx-auto  mt-2 text-start">
+        <label for="percentage">Процент наценки по умолчанию</label>
+        <input
+          formControlName="percentage"
+          [defaultValue]="category?.percentage"
+          class="input"
+          type="text" id="percentage" placeholder="Процент наценки по умолчанию...">
+      </div>
+
+      <div class="text-center mt-3 mx-auto">
+        <button
+          stopPropagation
+          class="btn btn-action my-1 py-3 w-full"
+          [disabled]="this.categoryForm.invalid"
+          type="submit"
+        >Сохранить
+        </button>
+        @if (!category?.id) {
+          <button stopPropagation class="btn btn-orange my-1 py-3 w-full" (click)="exit()">Отменить
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</form>
+

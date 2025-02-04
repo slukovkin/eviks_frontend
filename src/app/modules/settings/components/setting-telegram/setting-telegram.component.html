@@ -1,0 +1,50 @@
+<div class="card-body">
+  <form
+    [formGroup]="telegramForm"
+    (ngSubmit)="onSubmit()">
+
+    <div class="flex flex-col text-center mx-auto my-2 w-full p-2">
+      <div class="flex flex-col">
+        <mat-form-field>
+          <mat-label>ID Пользователя</mat-label>
+          <input
+            matInput formControlName="telegramBotId">
+          <mat-error
+            *ngIf="telegramForm.hasError('required', 'telegramBotId')">
+            Поле обязательное
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="flex flex-col">
+        <mat-form-field>
+          <mat-label>Token</mat-label>
+          <input matInput formControlName="telegramToken">
+          <mat-error
+            *ngIf="telegramForm.hasError('required', 'telegramToken')">
+            Поле обязательное
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="text-center mx-auto w-full">
+        <button mat-raised-button [disabled]="this.telegramForm.invalid" class="button-rounded w-full"
+                type="submit">Сохранить
+        </button>
+      </div>
+    </div>
+  </form>
+  <!--  <h6>Настройка телеграмм бота</h6>-->
+  <!--  <form id="tbform" method="post" name="tbform">-->
+  <!--    <div class="form-group grid mx-2">-->
+  <!--      <label for="tbname">Название бота </label>-->
+  <!--      <input required="required" class="input" type="text" id="tbname" name="tbname">-->
+  <!--    </div>-->
+  <!--    <div class="form-group grid mx-2 m-2">-->
+  <!--      <label for="tbtoken">Токен бота </label>-->
+  <!--      <input required="required" class="input" type="text" id="tbtoken" name="tbtoken">-->
+  <!--    </div>-->
+  <!--    <input type="hidden" name="q" id="tbform_q">-->
+  <!--    <input type="hidden" name="tbform_q" value="">-->
+  <!--    <input type="submit" name="tbform_s" id="tbform_s" style="display:none">-->
+  <!--  </form>-->
+</div>

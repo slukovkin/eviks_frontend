@@ -1,0 +1,29 @@
+<div class="flex flex-col w-full">
+  <h5>Приходная накладная № {{ invoice?.doc_number }}</h5>
+  <h6>Дата: {{ invoice?.date | date:'dd/MM/YYYY' }}</h6>
+  <table class="mx-auto w-full justify-between">
+    <tr class="w-full grid grid-cols-5 px-4 py-2 justify-between
+    border border-slate-500 h-[50px] items-center">
+      <th>Код</th>
+      <th>Артикул</th>
+      <th>Наименование</th>
+      <th>Количество</th>
+      <th>Цена</th>
+    </tr>
+    @for (product of invoice?.products; track product.productId) {
+      <tr stopPropagation
+          class="grid grid-cols-5 mt-0.5 px-4 py-2 text-center
+        items-center cursor-pointer select-none border-b border-slate-500">
+        <td>{{ product.code }}</td>
+        <td>{{ product.article }}</td>
+        <td>{{ product.title }}</td>
+        <td>{{ product.qty }}</td>
+        <td>{{ product.priceIn | currency: 'EUR' }}</td>
+      </tr>
+    }
+
+    <tr>
+      <td>Сумма закупки: {{ sum(invoice?.products!) | currency: 'EUR' }}</td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,60 @@
+<div class="w-[400px] mx-auto">
+  <form (ngSubmit)="onSubmit()" [formGroup]="selectForm">
+    <div class="border border-gray-200 rounded-md py-2 hover:border-indigo-500 hover:outline-1">
+      <div class="hover:cursor-pointer">
+        <div class="flex justify-center">
+          <img class="w-[170px] h-[170px]" [src]='product?.imageUrl' alt="{{product?.title}}">
+        </div>
+        <div class="p-3">
+          <div>Артикул: {{ product?.article }}</div>
+          <div>Код: {{ product?.code }}</div>
+          <div>
+           <span>
+              <strong>{{ product?.brandId }}</strong>
+            </span>
+          </div>
+          <div class="flex">
+            <div class="flex w-full items-center justify-between">
+              <span>Наличии : {{ product?.stores![0].ProductStore.qty }}</span>
+              <input
+                formControlName="selectQty"
+                [autofocus]="true"
+                class="input w-[80px] ml-2"
+              >
+            </div>
+          </div>
+          @if (!documentService.isOutInvoice$()) {
+            <div class="flex">
+              <div class="flex w-full items-center justify-between">
+                <span>Закупочная: {{ product?.stores![0].ProductStore.priceIn | eurToUah }} грн</span>
+                <input
+                  formControlName="selectPriceIn"
+                  class="input w-[80px] ml-2"
+                >
+              </div>
+            </div>
+          }
+          <div>
+            <div class="flex w-full items-center justify-between">
+              <span>Отпускная: {{ product?.stores![0].ProductStore.priceOut | eurToUah }} грн</span>
+              <input
+                formControlName="selectPriceOut"
+                class="input w-[80px] ml-2">
+            </div>
+          </div>
+
+          <div>
+            <span>
+              <button stopPropagation class="btn btn-action w-full py-2 mt-2" type="submit">Сохранить</button>
+              <button stopPropagation class="btn btn-orange w-full py-2 mt-2" (click)="back()"
+                      type="button">Отменить</button>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+

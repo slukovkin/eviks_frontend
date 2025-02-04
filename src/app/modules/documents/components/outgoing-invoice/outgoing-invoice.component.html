@@ -1,0 +1,186 @@
+<form class="mx-auto text-center"
+      (ngSubmit)="submit()"
+      [formGroup]="outgoingForm">
+  <div class="mt-2">
+    <h4 class="text-center">Расходная накладная</h4>
+  </div>
+  <div class="grid grid-cols-3 w-full text-center rounded-md px-1">
+    <div class="flex flex-col text-start px-3">
+      <div class="flex flex-col">
+        <label for="invoice">Номер документа</label>
+        <input
+          formControlName="invoice"
+          [value]="outgoingInvoiceService.lastOutgoingInvoiceNumber ?? initNumber"
+          type="text" id="invoice" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="data_doc">Дата документа</label>
+        <input type="date" id="data_doc" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="customer">Покупатель</label>
+        <mat-select
+          formControlName="customer"
+          id="customer" class="py-2 border border-gray-400 rounded-md px-2" value="0">
+          @for (customer of customerService.customers; track customer.id) {
+            <mat-option [value]='customer.id'>{{ getCustomer(customer) }}
+            </mat-option>
+          }
+        </mat-select>
+        <div class="inline-flex"
+             *ngIf="outgoingForm.controls['customer'].invalid">
+          <div class="text-red-600 mt-1 text-sm" *ngIf="outgoingForm.controls['customer'].hasError('required')">
+            Field is required
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col text-start">
+        <label>Поставщик</label>
+        <mat-select
+          formControlName="firm"
+          class="py-2 border border-gray-400 rounded-md px-2">
+          <mat-option
+            [value]="settingService.setting?.firmName">{{ settingService.setting?.firmName }}
+          </mat-option>
+        </mat-select>
+        <div class="inline-flex"
+             *ngIf="outgoingForm.controls['firm'].invalid">
+          <div class="text-red-600 mt-1 text-sm" *ngIf="outgoingForm.controls['firm'].hasError('required')">
+            Field is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col text-start px-3">
+      <div class="flex flex-col text-start">
+        <label for="store">Склад</label>
+        <mat-select id="store" class="py-2 border border-gray-400 rounded-md px-2"
+                    formControlName="store"
+                    required
+                    [value]="settingService.setting?.storeId">
+          @for (store of storeService.stores; track store.id) {
+            <mat-option [value]="store.id">{{ store.title }}</mat-option>
+          }
+        </mat-select>
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="check">Счет</label>
+        <input type="text" id="check" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="currency">Валюта</label>
+        <!--        <input type="text" id="currency" class="input">-->
+        <mat-select id="currency" class="py-2 border border-gray-400 rounded-md px-2"
+                    formControlName="currency"
+                    required
+                    [value]="settingService.setting?.currencyId"
+        >
+          @for (currency of currencyService.currencies; track currency.id) {
+            <mat-option [value]="currency.id">{{ currency.name }}</mat-option>
+          }
+        </mat-select>
+      </div>
+    </div>
+    <div class="flex flex-col text-start px-3">
+      <div class="flex flex-col text-start">
+        <label for="basis">Основание</label>
+        <input type="text" id="basis" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="note">Примечание</label>
+        <input type="text" id="note" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="scan_doc">Скан. документа</label>
+        <input type="text" id="scan_doc" class="input">
+      </div>
+    </div>
+  </div>
+  <div class="grid mt-2 w-full px-2 py-2 ">
+    <nav>
+      <div class="w-full mb-2 text-start px-1">
+        <button stopPropagation class="btn btn-action mr-1" type="submit"
+                [disabled]="this.outgoingForm.invalid">Провести
+        </button>
+        <button stopPropagation class="btn btn-red mr-1" (click)="clearProducts()">Очистить</button>
+      </div>
+    </nav>
+
+  </div>
+</form>
+<table class="grid grid-cols-1 px-1 py-1 w-full justify-center items-center mx-auto">
+  <div>
+    <button stopPropagation class="btn btn-action mr-1 my-2 w-full"
+            (click)="addProduct()">Добавить
+    </button>
+    <button stopPropagation class="btn btn-action mr-1 mb-2 w-full"
+            (click)="order()">Добавить из заказа
+    </button>
+  </div>
+  <tr class="grid grid-cols-7 justify-between border border-slate-500">
+    <th>Наименование</th>
+    <th>Артикул</th>
+    <th>Единицы</th>
+    <th>Количество</th>
+    <th>Цена</th>
+    <th>Сумма</th>
+    <th></th>
+  </tr>
+
+  @if (!documentService.isOrder$()) {
+    <ng-container *ngFor="let product of documentService.products$()">
+      <tr class="grid grid-cols-7 mt-2 px-2 py-2 justify-between text-center border border-slate-500">
+        <td>{{ product.code }}</td>
+        <td>{{ product.article }}</td>
+        <td>шт</td>
+        <td>{{ product.qty }}</td>
+        <td>{{ product.priceOut | eurToUah }}</td>
+        <td>{{ product.qty * product.priceOut | eurToUah }}</td>
+        <td>
+          <div>
+            <!-- Если 0, то накладная без заказа -->
+            <fa-icon [icon]="deleteIcon" class="text-red-600 cursor-pointer"
+                     (click)="unselectProduct(product.productId, 0)"
+            ></fa-icon>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  } @else {
+    <ng-container *ngFor="let product of documentService.productsToInvoice$()?.productList">
+      <tr class="grid grid-cols-7 mt-2 px-2 py-2 justify-between text-center border border-slate-500">
+        <td>{{ product.code }}</td>
+        <td>{{ product.article }}</td>
+        <td>шт</td>
+        <td>{{ product.qty }}</td>
+        <td>{{ product.priceOut | eurToUah }}</td>
+        <td>{{ product.qty * product.priceOut | eurToUah }}</td>
+        <td>
+          <div>
+            <!-- Если 0, то накладная на основании заказа -->
+            <fa-icon [icon]="deleteIcon" class="text-red-500 cursor-pointer"
+                     (click)="unselectProduct(product.id, 1)"
+            ></fa-icon>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  }
+
+  <tr class="grid grid-cols-7  mt-2 px-2 py-2 justify-between text-end border border-slate-500">
+    <td class="col-span-5 text-end">Сумма:</td>
+    <td>{{ sum() | eurToUah }}</td>
+  </tr>
+  <tr class="grid grid-cols-7 mt-2 px-2 py-2 justify-between text-end border border-slate-500">
+    <td class="col-span-5 text-end">Оплачено:</td>
+    <td>0</td>
+  </tr>
+</table>
+
+
+<ng-container *ngIf="modalService.isVisible$()">
+  <app-modal [title]="modalService.titleSing()">
+    <app-select-product></app-select-product>
+  </app-modal>
+</ng-container>
+

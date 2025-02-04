@@ -1,0 +1,40 @@
+<form (ngSubmit)="submit()" [formGroup]="storeForm">
+  <div class="flex flex-col text-center mx-auto my-6">
+    <div>
+      <div class="grid mx-auto mt-2 text-start">
+        <label for="name">Наименование</label>
+        <input
+          class="input"
+          formControlName="title"
+          [defaultValue]="store?.title"
+          required
+          type="text" id="name" placeholder="Наименование...">
+      </div>
+      <div
+        *ngIf="storeForm.controls['title'].hasError('required')
+          && storeForm.controls['title'].touched"
+        class="grid mx-auto mt-1 text-start">
+        <span class="text-red-600">Required field</span>
+      </div>
+
+      <div class="grid mx-auto mt-2 text-start">
+        <label for="description">Описание</label>
+        <textarea
+          formControlName="description"
+          [defaultValue]="store?.description"
+          placeholder="Введите описание..." id="description" class="rounded-md text-black p-2"></textarea>
+      </div>
+      <div class="text-center mt-3 mx-auto">
+        <button
+          class="btn btn-action my-1 py-3 w-full"
+          [disabled]="this.storeForm.invalid"
+          type="submit"
+        >Сохранить
+        </button>
+        <button class="btn btn-orange my-1 py-3 w-full" (click)="exit()">Отменить
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+

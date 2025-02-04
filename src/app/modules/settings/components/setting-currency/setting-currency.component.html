@@ -1,0 +1,35 @@
+<div class="card-body p-2 text-center">
+  <form name="valform">
+    <label>Курсы валют</label>
+    <table class="table table-sm w-full">
+      <tbody>
+      <tr>
+        <th>Код</th>
+        <th>Наименование</th>
+        <th>Курс</th>
+        <th></th>
+      </tr>
+
+        @for (currency of currencyService.currencies; track currency.id) {
+          <tr>
+            <td>
+              <input
+                [readOnly]="true"
+                class="input w-full"
+                value="{{currency.code}}"></td>
+            <td>
+              <input
+                [readOnly]="true"
+                class="input w-full"
+                value="{{currency.name}}"></td>
+            <td>
+              <input
+                [readOnly]="true"
+                class="input w-full"
+                value="{{currency.rate}}"></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </form>
+</div>

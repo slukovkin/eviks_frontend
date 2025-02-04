@@ -1,0 +1,41 @@
+<app-promotion></app-promotion>
+<!-- products -->
+<main class="w-full">
+  <div class="lg:flex w-screen-xl gap-1">
+    <!-- categories -->
+    <section class="md:px-2 w-full lg:w-1/5">
+      <div class="bg-blue-900">
+        <h6 class="text-white font-semibold px-2 py-4">Категории</h6>
+      </div>
+      <div>
+        <app-sidebar [categories]="categoryService.categories"></app-sidebar>
+      </div>
+    </section>
+
+    <section class="px-2 w-full">
+      @if (this.productService.foundProducts.length !== 0) {
+      <span>Найдено: {{ this.productService.foundProducts.length }} </span>
+      <button
+        class="btn btn-action py-2 my-2 w-full"
+        (click)="clearFoundProducts()"
+      >
+        Очистить поиск
+      </button>
+      }
+
+      <div
+        class="md:grid-cols-5 content-around lg:grid items-center space-x-2 overflow-y-auto whitespace-pre-wrap"
+      >
+        @if (this.productService.foundProducts.length !== 0) { @for (product of
+        this.productService.foundProducts; track product.id) {
+        <app-product-card [product]="product"></app-product-card>
+        } } @else { @for (product of this.productService.products; track
+        product.id) { @if (!productService.isSelectFilter) {
+        <app-product-card [product]="product"></app-product-card>
+        } @else if (product.categoryId === productService.selectCategory) {
+        <app-product-card [product]="product"></app-product-card>
+        } } }
+      </div>
+    </section>
+  </div>
+</main>

@@ -1,0 +1,22 @@
+<div class="items-center p-2 w-full">
+  <div>
+    <button
+      (click)="showAllProduct()"
+      class="w-full text-md font-light text-start my-1 py-1 px-2 decoration-purple-800 border-l border-b underline-offset-2 hover:text-xl hover:border-l-purple-800 hover:transition hover:duration-700 hover:ease-in-out hover:border-b-purple-800 hover:text-purple-800"
+    >
+      Все категории
+    </button>
+  </div>
+  <ul>
+    @for (category of categories; track category.id) {
+    <li class="flex w-full my-1">
+      <button
+        (click)="showProductsWithCategory(category.id ?? null)"
+        class="w-full text-md font-light text-start my-1 py-1 px-2 decoration-purple-800 border-l border-b underline-offset-2 hover:text-xl hover:border-l-purple-800 hover:transition hover:duration-700 hover:ease-in-out hover:border-b-purple-800 hover:text-purple-800"
+      >
+        {{ category.title }}
+      </button>
+    </li>
+    }
+  </ul>
+</div>

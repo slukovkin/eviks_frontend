@@ -1,0 +1,48 @@
+<table class="w-full mx-auto">
+  <tr class="grid grid-cols-10 border border-gray-500 py-2 mx-1">
+    <th>Изображение</th>
+    <th>Код</th>
+    <th>Артикул</th>
+    <th>Наименование</th>
+    <!--    <th>Производитель</th>-->
+    <th>Категория</th>
+    <th>Количество</th>
+    <th>Цена</th>
+    <th>Сумма</th>
+    <th>Действие</th>
+  </tr>
+
+
+  <tr stopPropagation *ngFor="let product of products"
+      class="grid grid-cols-10 items-center text-center border-b border-gray-300 py-1 m-1"
+  >
+    <td>
+      <img [src]="product.imageUrl" alt="{{product.title}}"
+           class="mx-auto image-circle">
+    </td>
+    <td>{{ product.code }}</td>
+    <td>{{ product.article }}</td>
+    <td>{{ product.title }}</td>
+    <!--    <td>{{ product.brandId }}</td>-->
+    <td>{{ product.categoryId | getCategoryTitleById }}</td>
+    <td>{{ product.qty }}</td>
+    <td>{{ product.priceOut | eurToUah }} грн</td>
+    <td>{{ product.priceOut * product.qty | eurToUah }} грн</td>
+    <td>
+      <div>
+        <fa-icon stopPropagation class="px-2 text-amber-600 cursor-pointer"
+                 [icon]="editIcon">
+          update
+        </fa-icon>
+        <fa-icon stopPropagation class="px-2 text-red-600 cursor-pointer"
+                 [icon]="deleteIcon"
+        >delete
+        </fa-icon>
+      </div>
+    </td>
+  </tr>
+  <div class="w-full my-2">
+    <button class="btn btn-orange w-full" (click)="back()">Назад
+    </button>
+  </div>
+</table>

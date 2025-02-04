@@ -1,0 +1,181 @@
+<form class="mx-auto text-center"
+      (ngSubmit)="submit()"
+      [formGroup]="incomingForm"
+>
+  <div class="mt-2">
+    <h4 class="text-center">Приходная накладная</h4>
+  </div>
+  <div class="grid grid-cols-3 w-full text-center rounded-md px-1">
+    <div class="flex flex-col text-start px-3">
+      <div class="flex flex-col">
+        <label for="invoice">Номер документа</label>
+        <input
+          formControlName="invoice"
+          [value]="incomingInvoiceService.lastInvoiceNumber ?? initNumber"
+          type="text" id="invoice" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="data_doc">Дата документа</label>
+        <input
+          [value]="data | date: 'yyyy-MM-dd'"
+          formControlName="data_doc"
+          type="date" id="data_doc" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label>Покупатель</label>
+        <mat-select
+          formControlName="firm"
+          class="py-2 border border-gray-400 rounded-md px-2">
+          <mat-option [value]="settingService.setting?.firmName">{{ settingService.setting?.firmName }}</mat-option>
+        </mat-select>
+        <div class="inline-flex"
+             *ngIf="incomingForm.controls['firm'].invalid">
+          <div class="text-red-600 mt-1 text-sm" *ngIf="incomingForm.controls['firm'].hasError('required', 'firm')">
+            Field is required
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="customer">Поставщик</label>
+        <mat-select
+          formControlName="customer"
+          id="customer" class="py-2 border border-gray-400 rounded-md px-2" value="0">
+          @for (customer of customerService.customers; track customer.id) {
+            <mat-option [value]='customer.id'>{{ getCustomer(customer) }}</mat-option>
+          }
+        </mat-select>
+        <div class="inline-flex"
+             *ngIf="incomingForm.controls['customer'].invalid">
+          <div class="text-red-600 mt-1 text-sm"
+               *ngIf="incomingForm.controls['customer'].hasError('required', 'customer')">
+            Field is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col text-start px-3">
+      <div class="flex flex-col text-start">
+        <label for="store">Склад</label>
+        <mat-select id="store" class="py-2 border border-gray-400 rounded-md px-2"
+                    formControlName="store"
+                    [value]="settingService.setting?.storeId">
+          @for (store of storeService.stores; track store.id) {
+            <mat-option [value]="store.id">{{ store.title }}</mat-option>
+          }
+        </mat-select>
+        <div class="inline-flex"
+             *ngIf="incomingForm.controls['store'].invalid">
+          <div class="text-red-600 mt-1 text-sm" *ngIf="incomingForm.controls['store'].hasError('required', 'store')">
+            Field is required
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="check">Счет</label>
+        <input type="text" id="check" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="currency">Валюта</label>
+        <!--        <input type="text" id="currency" class="input">-->
+        <mat-select id="currency" class="py-2 border border-gray-400 rounded-md px-2"
+                    formControlName="currency"
+                    required
+                    [value]="settingService.setting?.currencyId">
+          @for (currency of currencyService.currencies; track currency.id) {
+            <mat-option [value]="currency.id">{{ currency.name }}</mat-option>
+          }
+        </mat-select>
+        <div class="inline-flex"
+             *ngIf="incomingForm.controls['currency'].invalid">
+          <div class="text-red-600 mt-1 text-sm"
+               *ngIf="incomingForm.controls['currency'].hasError('required', 'currency')">
+            Field is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col text-start px-3">
+      <div class="flex flex-col text-start">
+        <label>Основание</label>
+        <mat-select class="py-2 border border-gray-400 rounded-md px-2"
+        >
+          <mat-option>не доступно</mat-option>
+        </mat-select>
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="note">Примечание</label>
+        <input
+          formControlName="note"
+          type="text" id="note" class="input">
+      </div>
+      <div class="flex flex-col text-start">
+        <label for="scan_doc">Скан. документа</label>
+        <input
+          [readOnly]="true"
+          type="text" id="scan_doc" class="input">
+      </div>
+    </div>
+  </div>
+
+  <div class="grid mt-2 w-full px-2 py-2 ">
+    <nav>
+      <div class="w-full mb-2 text-start px-1">
+        <button stopPropagation class="btn btn-action mr-1" type="submit" [disabled]="this.incomingForm.invalid">
+          Провести
+        </button>
+        <button stopPropagation class="btn btn-red mr-1" (click)="clearProducts()">Очистить</button>
+      </div>
+    </nav>
+  </div>
+</form>
+<table class="grid grid-cols-1 px-1 py-1 w-full justify-center items-center mx-auto">
+  <div>
+    <button stopPropagation class="btn btn-action mr-1 my-2 w-full"
+            routerLink="/select_product">Добавить
+    </button>
+  </div>
+
+  <tr class="grid grid-cols-7 justify-between border border-slate-500">
+    <th>Наименование</th>
+    <th>Артикул</th>
+    <th>Единицы</th>
+    <th>Количество</th>
+    <th>Цена</th>
+    <th>Сумма</th>
+    <th></th>
+  </tr>
+
+  @for (product of documentService.products$(); track product.productId) {
+    <tr class="grid grid-cols-7 mt-2 px-2 py-2 justify-between text-center border border-slate-500">
+      <td>{{ product.code }}</td>
+      <td>{{ product.article }}</td>
+      <td>шт</td>
+      <td>{{ product.qty }}</td>
+      <td>{{ product.priceIn }}</td>
+      <td>{{ product.qty * product.priceIn }}</td>
+      <td>
+        <div>
+          <fa-icon [icon]="deleteIcon" class="text-red-600 cursor-pointer"
+                   (click)="unselectProduct(product.productId)"
+          ></fa-icon>
+        </div>
+      </td>
+    </tr>
+  }
+
+  <tr class="grid grid-cols-7  mt-2 px-2 py-2 justify-between text-end border border-slate-500">
+    <td class="col-span-5 text-end">Сумма:</td>
+    <td>{{ sum() }}</td>
+  </tr>
+  <tr class="grid grid-cols-7 mt-2 px-2 py-2 justify-between text-end border border-slate-500">
+    <td class="col-span-5 text-end">Оплачено:</td>
+    <td>0</td>
+  </tr>
+</table>
+
+<ng-container *ngIf="modalService.isVisible$()">
+  <app-modal [title]="modalService.titleSing()">
+    <app-select-product></app-select-product>
+  </app-modal>
+</ng-container>
+

@@ -1,0 +1,46 @@
+<div class="flex flex-col text-center mx-auto my-6 w-2/3 p-2">
+  <div class="mb-1 flex flex-col">
+    <form (ngSubmit)="onSubmit()" [formGroup]="countryForm">
+      <div class="mb-1 flex flex-col">
+        <mat-form-field>
+          <mat-label>Код</mat-label>
+          <input
+            matInput
+            formControlName="code"
+            placeholder="Код должен содержать 3 знака"
+          >
+        </mat-form-field>
+        @if (countryForm.controls['code'].dirty || countryForm.controls['code'].touched) {
+          <mat-error *ngIf="countryForm.hasError('required', 'code')">
+            Поле обязательное для заполнения
+          </mat-error>
+          <mat-error *ngIf="countryForm.hasError('minlength', 'code') || countryForm.hasError('maxlength', 'code')">
+            Поле должно содержать 3 знака
+          </mat-error>
+        }
+      </div>
+      <div class="mb-1 flex flex-col">
+        <mat-form-field>
+          <mat-label>Наименование</mat-label>
+          <input
+            matInput
+            formControlName="title"
+            placeholder="Введите наименование производителя">
+        </mat-form-field>
+        @if (countryForm.controls['title'].dirty || countryForm.controls['title'].touched) {
+          <mat-error *ngIf="countryForm.hasError('required', 'title')">
+            Поле обязательное для заполнения
+          </mat-error>
+        }
+      </div>
+      <div class="text-center mt-3 mx-auto w-full">
+        <button stopPropagation [disabled]="countryForm.invalid" class="btn btn-action my-1 py-3 w-full"
+                type="submit">Сохранить
+        </button>
+        <button stopPropagation class="btn btn-orange my-1 py-3 w-full"
+                (click)="back()">Отменить
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

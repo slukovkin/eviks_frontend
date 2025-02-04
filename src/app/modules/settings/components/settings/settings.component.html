@@ -1,0 +1,127 @@
+<form (ngSubmit)="submit()" [formGroup]="settingForm">
+  <button class="btn btn-action w-full mb-2" type="submit" [disabled]="settingForm.invalid">Сохранить</button>
+  <div class="grid grid-cols-3 mx-auto w-full text-center h-full gap-2">
+    <div class="border border-slate-500 p-3 rounded-lg card-body">
+      <div class="flex flex-col">
+        <h5>Основные настройки</h5>
+        <label for="title" class="text-start my-2">Название сайта</label>
+        <input
+          formControlName="title"
+          required
+          [defaultValue]="setting?.firmName"
+          class="input"
+          type="text" id="title" placeholder="Введите название сайта...">
+      </div>
+      <div class="flex flex-col">
+        <label for="select_round" class="text-start my-2">Количество знаков после запятой</label>
+        <mat-select id="select_round" class="py-2 border border-gray-400 rounded-md px-2" value="0">
+          <mat-option value="0">без копеек</mat-option>
+          <mat-option value="1">до 1 копейки</mat-option>
+          <mat-option value="2">до 10 копеек</mat-option>
+          <mat-option value="3">до 50 копеек</mat-option>
+        </mat-select>
+      </div>
+      <div class="flex flex-col">
+        <label for="format_date" class="text-start my-2">Формат даты</label>
+        <input type="date" id="format_date" class="input">
+      </div>
+      <div class="flex flex-col">
+        <label for="start_time" class="text-start my-2">Начало робочого дня</label>
+        <input type="time" id="start_time" class="input">
+      </div>
+      <div class="flex flex-col">
+        <label for="end_time" class="text-start my-2">Конец робочого дня</label>
+        <input type="time" id="end_time" class="input">
+      </div>
+
+      <div class="flex flex-col">
+        <label for="store" class="text-start my-2">Склад по умолчанию</label>
+        <mat-select id="store" class="py-2 border border-gray-400 rounded-md px-2"
+                    formControlName="store"
+                    required
+                    value="{{setting?.storeId}}"
+        >
+          @for (store of storeService.stores; track store.id) {
+            <mat-option [value]="store.id">{{ store.title }}</mat-option>
+          }
+        </mat-select>
+
+      </div>
+
+      <div class="flex flex-col">
+        <label for="currency" class="text-start my-2">Валюта учета</label>
+        <mat-select id="currency" class="py-2 border border-gray-400 rounded-md px-2"
+                    formControlName="currency"
+                    required
+                    value="{{setting?.currencyId}}"
+        >
+          @for (currency of currencyService.currencies; track currency.id) {
+            <mat-option [value]="currency.id">{{ currency.code }}
+            </mat-option>
+          }
+        </mat-select>
+
+      </div>
+
+    </div>
+    <div class="border border-slate-500 p-3 rounded-lg card-body">
+      <h5>Настройка бизнесс-процессов</h5>
+      <div class="flex flex-col card-body p-2">
+        <label>Тип отпускных цен</label>
+        <input
+          formControlName="typePriceOne"
+          [defaultValue]="setting?.priceTypeOne"
+          type="text" class="input mb-1" id="typePriceOne" placeholder="Розничная"
+          title="Согласно введённого значения будет расчитываться отпуская цена. Например: 50% от закупки">
+        <input
+          formControlName="typePriceTwo"
+          [defaultValue]="setting?.priceTypeTwo"
+          type="text" class="input mb-1" id="typePriceTwo" placeholder="Мелкий опт"
+          title="Согласно введённого значения будет расчитываться отпуская цена. Например: 35% от закупки">
+        <input
+          formControlName="typePriceThree"
+          [defaultValue]="setting?.priceTypeThree"
+          type="text" class="input mb-1" id="typePriceThree" placeholder="Опт"
+          title="Согласно введённого значения будет расчитываться отпуская цена. Например: 20% от закупки">
+
+      </div>
+      <div class="card-body p-2">
+        <div class="flex flex-col my-1">
+          <label for="markupDefault">Наценка по умолчанию</label>
+          <input
+            formControlName="markup"
+            [defaultValue]="setting?.markup"
+            type="text" class="input" id="markupDefault" placeholder="50%">
+        </div>
+        <div class="flex flex-col">
+          <label for="sale_in">Процес оплаты по ПН</label>
+          <mat-select id="sale_in" class="py-2 border border-gray-400 rounded-md px-2" value="0">
+            <mat-option value="0">По факту</mat-option>
+            <mat-option value="1">Предоплата</mat-option>
+            <mat-option value="2">С отрочкой платежа</mat-option>
+          </mat-select>
+        </div>
+        <div class="flex flex-col">
+          <label for="sale_out">Процес оплаты по РН</label>
+          <mat-select id="sale_out" class="py-2 border border-gray-400 rounded-md px-2" value="0">
+            <mat-option value="0">По факту</mat-option>
+            <mat-option value="1">Предоплата</mat-option>
+            <mat-option value="2">С отрочкой платежа</mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <app-setting-currency></app-setting-currency>
+      </div>
+    </div>
+    <div class="border border-slate-500 p-3 rounded-lg card-body">
+      <h5>Настройка коммуникаций</h5>
+      <div class="col-12  col-md-5 col-xl-4  ">
+        <app-setting-sms></app-setting-sms>
+        <app-setting-telegram
+          (telegramSetting)="onChangeTelegramSetting($event)"
+        ></app-setting-telegram>
+      </div>
+    </div>
+  </div>
+</form>

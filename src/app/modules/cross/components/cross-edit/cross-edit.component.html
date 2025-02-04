@@ -1,0 +1,29 @@
+<form (ngSubmit)="onSubmit()"
+      [formGroup]="crossForm"
+      (input)="onChangeForm()"
+      class="flex justify-center">
+  <div class="mb-1">
+    <mat-form-field>
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code">
+      <mat-error
+        *ngIf="crossForm.hasError('required', 'code')">Поле обязательное
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-1">
+    <mat-form-field class="ml-2">
+      <mat-label>Origin</mat-label>
+      <input matInput formControlName="origin">
+      <mat-error *ngIf="crossForm.hasError('required', 'origin')">Поле обязательное</mat-error>
+    </mat-form-field>
+  </div>
+
+  <button
+    [disabled]="crossForm.invalid || !!formError"
+    mat-raised-button class="btn py-2 ml-2 button-rounded button-size" type="submit">Сохранить
+  </button>
+
+</form>
+

@@ -1,0 +1,30 @@
+<div class="md:w-full lg:w-1/4 border border-gray-200 rounded-md p-2 mx-auto mt-16">
+  <div class="flex justify-center mt-2">
+    <img class="w-[150px] h-[150px]" [src]='product?.imageUrl' alt="{{product?.title}}">
+  </div>
+  <div class="p-3 text-lg font-serif">
+    <div>Код: {{ product?.article }}</div>
+    <div>Индекс: {{ product?.code }}</div>
+    <div>Производитель: <strong>{{ product?.brandId }}</strong></div>
+    <div class="flex">
+      <span>Количество : <span class="text-xl font-semibold">{{ qty }}</span> шт.</span>
+    </div>
+    <div class="mt-2">
+      <button class="mr-1 w-[40px] h-[40px] bg-teal-700 text-white rounded-full text-center" (click)="increment()">+
+      </button>
+      <button class="w-[40px] h-[40px] bg-teal-700 text-white rounded-full text-center" (click)="decrement()">-</button>
+    </div>
+    <div class="text-xl font-semibold my-2">
+      <span>{{ product?.stores?.[0]?.ProductStore?.priceOut!  | eurToUah }} грн</span>
+    </div>
+
+    <div class="mt-2">
+      <span>
+        <button class="btn btn-action w-full my-1 py-2" (click)="submit()">В корзину</button>
+      </span>
+      <span>
+        <button class="btn btn-orange w-full py-2" type="button" (click)="exit()">Отмена</button>
+      </span>
+    </div>
+  </div>
+</div>

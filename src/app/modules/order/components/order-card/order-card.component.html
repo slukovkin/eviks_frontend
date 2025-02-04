@@ -1,0 +1,27 @@
+<table class="w-full">
+  <tr stopPropagation
+      (click)="detail(order?.productList ?? [])"
+      [class]="!order?.isDone ? 'isDoneFalse': 'isDoneTrue'">
+    <td>{{ order?.id }}</td>
+    <td>{{ !order?.isDone ? 'Открыт' : 'Закрыт' }}</td>
+    <td>{{ findCustomer(order?.userId ?? 0) }}</td>
+    <td>{{ order?.city }}</td>
+    <td>{{ order?.post }}</td>
+
+    <td>{{ sumOrder(order?.productList ?? []) | eurToUah }} грн</td>
+
+    <td>
+      <fa-icon [icon]="visible" class="px-2 text-green-600 cursor-pointer"
+               stopPropagation
+               (click)="detail(order?.productList ?? [])"></fa-icon>
+      @if (!order?.isDone) {
+        <fa-icon [icon]="editIcon" class="px-2 text-amber-600 cursor-pointer"
+                 stopPropagation
+                 (click)="addOrderInOutgoingInvoice(order!)"></fa-icon>
+        <fa-icon [icon]="deleteIcon" class="px-2 text-red-600 cursor-pointer"
+                 stopPropagation
+                 (click)="delete(order?.id!)"></fa-icon>
+      }
+    </td>
+  </tr>
+</table>

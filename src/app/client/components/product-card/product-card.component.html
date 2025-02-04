@@ -1,0 +1,47 @@
+<div class="border border-gray-200 rounded-md py-2 hover:border-indigo-500 hover:outline-1">
+  <div class="hover:cursor-pointer">
+    <div class="flex justify-center">
+      <img class="w-[170px] h-[170px]" [src]='product?.imageUrl' alt="{{product?.title}}">
+    </div>
+    <div class="p-3">
+      <div>Артикул: {{ product?.article }}</div>
+      <div>Код: {{ product?.code }}</div>
+      <div>
+      <span>
+        <strong>{{ product?.manufacturer?.title }}</strong>
+      </span>
+      </div>
+      <div class="flex">
+        @if (product?.stores?.[0]?.ProductStore?.qty !== 0) {
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="green"
+               class="size-5 font-bold stroke-green-600 stroke-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          <span class='ml-2'>в наличии : {{ product?.stores?.[0]?.ProductStore?.qty }}</span>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor"
+               class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
+          </svg>
+          <span class='ml-2'>под заказ</span>
+        }
+      </div>
+      <div class="p-1 bg-yellow-300 my-1 text-center rounded-md">
+        <span>{{ product?.stores?.[0]?.ProductStore?.priceOut! | eurToUah }} грн</span>
+      </div>
+      <div>
+      <span>
+    <button class="btn btn-action w-full py-2"
+            (click)="addProduct(product)"
+            [disabled]="product?.stores?.[0]?.ProductStore?.qty === 0"
+    >В корзину</button>
+    </span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

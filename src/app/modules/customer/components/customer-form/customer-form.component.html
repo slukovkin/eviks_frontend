@@ -1,0 +1,103 @@
+<form (ngSubmit)="submit()" [formGroup]="customerForm">
+  <div class="flex flex-col text-center mx-auto my-6">
+    <div>
+      <mat-form-field class="flex w-full">
+        <mat-label>Имя</mat-label>
+        <input
+          matInput
+          formControlName="firstname"
+          placeholder="Введите имя...">
+      </mat-form-field>
+
+      @if (customerForm.controls['firstname'].dirty || customerForm.controls['firstname'].touched) {
+        <mat-error
+          *ngIf="customerForm.hasError('required', 'firstname')">
+          Поле обязательное
+        </mat-error>
+      }
+
+      <mat-form-field class="flex w-full">
+        <mat-label>Фамилия</mat-label>
+        <input
+          matInput
+          formControlName="lastname"
+          placeholder="Введите фамилию...">
+      </mat-form-field>
+
+      @if (customerForm.controls['lastname'].dirty || customerForm.controls['lastname'].touched) {
+        <mat-error
+          *ngIf="customerForm.hasError('required', 'lastname')">
+          Поле обязательное
+        </mat-error>
+      }
+
+      <mat-form-field class="flex w-full">
+        <mat-label>Электронная почта</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Введите эл.почту...">
+      </mat-form-field>
+
+      @if (customerForm.controls['email'].dirty || customerForm.controls['email'].touched) {
+        <mat-error
+          *ngIf="customerForm.hasError('required', 'email')">
+          Поле обязательное
+        </mat-error>
+        <mat-error
+          *ngIf="customerForm.hasError('email', 'email')">
+          Введите валидный адрес эл. почты
+        </mat-error>
+      }
+
+      <div class="grid mx-auto mt-2 text-start">
+        <mat-form-field class="flex w-full">
+          <mat-label>Пароль</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            placeholder="Введите новый пароль">
+        </mat-form-field>
+      </div>
+
+      <div class="grid mx-auto mt-2 text-start">
+        <mat-form-field>
+          <mat-label>Телефон</mat-label>
+          <input
+            matInput
+            formControlName="phone"
+            placeholder="Введите телефон..."
+          >
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf="customerForm.controls['phone'].hasError('required')
+          && customerForm.controls['phone'].touched"
+        class="grid mx-auto  mt-1 text-start">
+        <span class="text-red-600">Required field</span>
+      </div>
+      <div class="grid mx-auto mt-2 text-start">
+        <mat-form-field>
+          <mat-label>Описание</mat-label>
+          <textarea
+            matInput
+            formControlName="description"
+            placeholder="Введите описание..."
+          ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="text-center mt-3 mx-auto">
+        <button
+          class="btn btn-action my-1 py-3 w-full"
+          [disabled]="this.customerForm.invalid"
+          type="submit"
+        >Сохранить
+        </button>
+        <button class="btn btn-orange my-1 py-3 w-full" (click)="exit()">Отменить
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+

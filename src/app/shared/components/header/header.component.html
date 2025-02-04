@@ -1,0 +1,77 @@
+<header class="shadow-sm py-2 border-b border-slate-500">
+  <div class="flex mx-auto justify-center px-4 py-4 w-full items-center">
+    <div>
+      <a routerLink="home" class="text-start px-4">LOGO</a>
+    </div>
+    <nav *ngIf="isAdmin; else isNotAdmin" class="justify-end">
+
+      <ul class="flex items-center gap-2">
+        <li class="text-white/50">
+          <input
+            [(ngModel)]="article"
+            (keydown.enter)="filterByArticle()"
+            type="text"
+            placeholder="Search article..."
+            class="px-2 rounded-md"
+          >
+        </li>
+        <li class="text-white/50">
+          <button routerLink="products" class="btn btn-action">
+            Товар
+          </button>
+        </li>
+        <li class="text-white/50">
+          <button class="btn btn-action" [disabled]="false" routerLink="incoming_invoice">
+            Приход товара
+          </button>
+        </li>
+        <li class="text-white/50">
+          <button class="btn btn-action" [disabled]="false" routerLink="outgoing_invoice">Расход товара</button>
+        </li>
+        <li class="text-white/50">
+          <button class="btn btn-action" [disabled]="false" routerLink="documents">Журналы</button>
+        </li>
+        <li class="text-white/50">
+          <button class="btn btn-action" [disabled]="true">Документы</button>
+        </li>
+        <li class="text-white/50">
+          <button class="btn btn-action" [disabled]="true">Отчеты</button>
+        </li>
+        <li class="text-white/50">
+          <button class="btn btn-action" [disabled]="false" routerLink="settings">Настройки</button>
+        </li>
+        <li class="text-white/50">
+          <button routerLink="customer" class="btn btn-action">Клиенты</button>
+        </li>
+        <li class="text-white/50">
+          <button (click)="exit()" class="btn btn-action">Выход</button>
+        </li>
+      </ul>
+    </nav>
+
+    <ng-template #isNotAdmin>
+      <nav class="flex items-center">
+        <ul class="flex items-center gap-2">
+          <li class="text-white/50">
+            <input
+              [(ngModel)]="article"
+              (keydown.enter)="filterByArticle()"
+              type="text"
+              placeholder="Search article..."
+              class="px-2 rounded-md"
+            >
+          </li>
+          <li class="text-white/50">
+            <button routerLink="home" class="btn btn-action">Home</button>
+          </li>
+          <li class="text-white/50">
+            <button routerLink="products" class="btn btn-action">Товар</button>
+          </li>
+          <li class="text-white/50">
+            <button (click)="exit()" class="btn btn-action">Выход</button>
+          </li>
+        </ul>
+      </nav>
+    </ng-template>
+  </div>
+</header>

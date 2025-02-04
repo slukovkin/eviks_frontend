@@ -1,0 +1,124 @@
+<form
+  [formGroup]="productForm"
+  (ngSubmit)="submit()">
+
+  <div class="md:w-full lg:w-2/3 flex flex-col text-center mx-auto my-6 p-2">
+    <div class="mb-1 flex flex-col">
+      <mat-form-field>
+        <mat-label>Код</mat-label>
+        <input
+          [readonly]="!!product?.id"
+          matInput
+          formControlName="code"
+          placeholder="Код должен содержать 8 знаков">
+      </mat-form-field>
+      @if (productForm.controls['code'].dirty || productForm.controls['code'].touched) {
+        <mat-error
+          *ngIf="productForm.hasError('required', 'code')">
+          Поле обязательное
+        </mat-error>
+        <mat-error
+          *ngIf="productForm.hasError('minlength', 'code') || productForm.hasError('maxlength', 'code')">
+          Поле дожно содержать 8 знаков
+        </mat-error>
+      }
+    </div>
+
+    <div class="mb-1 flex flex-col">
+      <mat-form-field>
+        <mat-label>Артикул</mat-label>
+        <input
+          matInput
+          formControlName="article"
+          placeholder="Введите артикул...">
+        <mat-error
+          *ngIf="productForm.hasError('required', 'article')">
+          Поле обязательное
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-1 flex flex-col">
+      <mat-form-field>
+        <mat-label>Наименование</mat-label>
+        <input
+          matInput
+          formControlName="title"
+          placeholder="Введите наименование...">
+        <mat-error
+          *ngIf="productForm.hasError('required', 'title')">
+          Поле обязательное
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-1 flex flex-col">
+      <mat-form-field>
+        <mat-label>Производитель</mat-label>
+        <mat-select formControlName="brand">
+          @for (manufacturer of manufacturerService.manufacturers; track manufacturer.id) {
+            <mat-option [value]="manufacturer.id">{{ manufacturer.title }}</mat-option>
+          }
+        </mat-select>
+        <mat-error
+          *ngIf="productForm.hasError('required', 'brand')">
+          Поле обязательное
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-1 flex flex-col">
+      <mat-form-field>
+        <mat-label>Категория</mat-label>
+        <mat-select formControlName="category">
+          @for (category of categoryService.categories; track category.id) {
+            <mat-option [value]="category.id">{{ category.title }}</mat-option>
+          }
+        </mat-select>
+        <mat-error
+          *ngIf="productForm.hasError('required', 'category')">
+          Поле обязательное
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!--  Image product-->
+
+    <div
+      (click)="upload.click()" tabindex="0"
+      class="flex flex-row mt-2 place-content-around items-center border border-teal-600 cursor-pointer">
+      <img [src]="this.previewImage()" alt="Изображение" [ngClass]="{
+        upload_image: this.previewImage(),
+        none_image: !this.previewImage()
+      }">
+
+      <div class="flex flex-row items-center justify-around mt-2">
+        <div class="flex flex-col">
+          <fa-icon [icon]="uploadIcon" class="text-2xl text-green-600 items-center"></fa-icon>
+          <p *ngIf="!previewImage() && !product?.imageUrl">Загрузите изображение</p>
+          <p *ngIf="previewImage() || product?.imageUrl">Изменить изображение</p>
+        </div>
+
+        <!-- Скрытое поле загрузки изображения -->
+        <input
+          #upload
+          tabindex="-10"
+          formControlName="picture"
+          (change)="fileHandler($event)"
+          accept="image/*,.png, .jpg"
+          type="file"
+          class="input opacity-0 hidden">
+      </div>
+    </div>
+
+    <div class="text-center mt-3 mx-auto w-full">
+      <button stopPropagation [disabled]="this.productForm.invalid" class="btn btn-action my-1 py-3 w-full"
+              type="submit">Сохранить
+      </button>
+      <button stopPropagation class="btn btn-orange my-1 py-3 w-full"
+              (click)="back()">Отменить
+      </button>
+    </div>
+  </div>
+</form>
+

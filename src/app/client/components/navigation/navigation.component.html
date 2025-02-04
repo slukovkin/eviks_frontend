@@ -1,0 +1,12 @@
+<div class="py-2">
+  <nav class="hidden lg:flex justify-between px-3 py-4 bg-blue-900 text-white">
+    @for (nav of navigation; track nav.label) {
+    <button
+      class="w-full mx-1 decoration-white underline-offset-2 hover:underline"
+      [routerLink]="nav.route"
+    >
+      {{ nav.label | uppercase }}
+    </button>
+    }
+  </nav>
+</div>
