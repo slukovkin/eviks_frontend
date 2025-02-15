@@ -1,7 +1,12 @@
 <div class="container-fluid mt-2">
-  <a routerLink="" class="uppercase font-bold text-pink-800">{{
+  <!-- <a routerLink="" class="uppercase font-bold text-pink-800">{{
     settingService.setting?.firmName
-  }}</a>
+  }}</a> -->
+  <div>
+    <a routerLink="">
+      <img class="h-10" src="./assets/images/Eviks_logo.webp" alt="" />
+    </a>
+  </div>
   <div class="mx-1">
     <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
       <div class="lg:flex items-center">
@@ -9,26 +14,8 @@
           formControlName="search"
           type="text"
           class="input w-[200px] mr-2"
-          placeholder="Поиск товара..."
+          placeholder="Пошук товару..."
         />
-        <!--        <span>-->
-        <!--          <button type="submit">-->
-        <!--            <svg-->
-        <!--              xmlns="http://www.w3.org/2000/svg"-->
-        <!--              fill="none"-->
-        <!--              viewBox="0 0 24 24"-->
-        <!--              stroke-width="1.5"-->
-        <!--              stroke="currentColor"-->
-        <!--              class="size-5"-->
-        <!--            >-->
-        <!--              <path-->
-        <!--                stroke-linecap="round"-->
-        <!--                stroke-linejoin="round"-->
-        <!--                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"-->
-        <!--              />-->
-        <!--            </svg>-->
-        <!--          </button>-->
-        <!--        </span>-->
       </div>
     </form>
   </div>
@@ -41,13 +28,13 @@
       <span class="text-gray-800 font-semibold m-0 tracking-widest"
         >+380679423431</span
       >
-      <span class="m-0 font-light">Интернет магазин</span>
+      <span class="m-0 font-light">ТОВ EVIKS</span>
     </div>
   </div>
   <nav class="flex items-center">
     <ul class="hidden lg:inline-flex items-center">
-      <li><a href="#" class="header-link">О нас</a></li>
-      <li><a href="#" class="header-link">Контакты</a></li>
+      <li><a href="#" class="header-link">Про нас</a></li>
+      <li><a href="#" class="header-link">Контакти</a></li>
     </ul>
     <ul class="hidden lg:inline-flex items-center">
       <li>
@@ -56,18 +43,21 @@
           >Выход</a
         >
         } @else {
-        <a class="header-btn cursor-pointer" routerLink="login">Войти</a>
+        <a class="header-btn cursor-pointer" routerLink="login">Увійти</a>
         }
       </li>
       @if (!authService.isAuth$()) {
       <li>
         <a class="header-btn cursor-pointer" routerLink="registration"
-          >Регистрация</a
+          >Реєстрація</a
         >
       </li>
       } @if (authService.isAuth$()) {
       <li>
-        <a class="header-btn cursor-pointer" routerLink="order">Корзина</a>
+        <a class="header-btn cursor-pointer" routerLink="order">Кошик</a>
+      </li>
+      <li>
+        <a class="header-btn cursor-pointer" routerLink="profile">Профіль</a>
       </li>
       }
     </ul>

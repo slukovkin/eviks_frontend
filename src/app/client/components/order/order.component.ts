@@ -14,13 +14,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FilterPipe } from '../../../shared/pipes/filter.pipe';
-import { GetCategoryTitleByIdPipe } from '../../../shared/pipes/get-category-title-by-id.pipe';
 import { StopPropagationDirective } from '../../../shared/directives/stop-propagation.directive';
 import { ModalService } from '../../../modules/modal/service/modal.service';
 import { OrderService } from '../../../modules/order/service/order.service';
 import { EurToUahPipe } from '../../../shared/pipes/eur-to-uah.pipe';
-import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../modules/auth/service/auth.service';
 import { CustomerService } from '../../../modules/customer/services/customer.service';
 import { ICustomer } from '../../../modules/customer/types/customer.interface';
@@ -30,17 +27,12 @@ import { IOrder } from '../../../modules/order/types/order.interface';
   selector: 'app-order',
   standalone: true,
   imports: [
-    CurrencyPipe,
     FaIconComponent,
-    FilterPipe,
-    GetCategoryTitleByIdPipe,
     NgForOf,
     NgIf,
     StopPropagationDirective,
     EurToUahPipe,
     ReactiveFormsModule,
-    RouterLink,
-    JsonPipe,
   ],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss',

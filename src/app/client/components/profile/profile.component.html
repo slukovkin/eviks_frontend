@@ -1,0 +1,35 @@
+<div class="flex w-screen-xl gap-1">
+  <div class="md:w-full lg:w-1/6 h-[60vh]">
+    <button
+      mat-raised-button
+      (click)="routeAvatar('profile/profile-avatar')"
+      class="raised"
+    >
+      AVATAR
+    </button>
+    <button
+      mat-raised-button
+      (click)="routeAvatar('profile/profile-orders')"
+      class="raised"
+    >
+      ORDERS
+    </button>
+    <button
+      mat-raised-button
+      (click)="routeAvatar('profile/profile-contacts')"
+      class="raised"
+    >
+      CONTACTS
+    </button>
+    <button
+      mat-raised-button
+      (click)="routeAvatar('profile/profile-accounts')"
+      class="raised"
+    >
+      ACCOUNTS
+    </button>
+  </div>
+  <div class="w-5/6 border border-teal-700">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -3,7 +3,7 @@
   [formGroup]="user"
   (ngSubmit)="submit()"
 >
-  <h3 class="mt-3 text-center">Авторизация</h3>
+  <h3 class="mt-3 text-center">Авторизація</h3>
   <div class="flex flex-col mt-5">
     <label for="email" class="text-slate-400 text-sm mt-2">Email</label>
     <input
@@ -68,16 +68,16 @@
   </div>
   <div class="flex flex-col mt-4 items-center">
     <button [disabled]="user.invalid" class="btn btn-green py-3 w-full">
-      Авторизация
+      Авторизація
     </button>
   </div>
   <div class="flex flex-col mt-4 items-center">
-    <button class="btn btn-orange py-3 w-full" (click)="back()">Отмена</button>
+    <button class="btn btn-orange py-3 w-full" (click)="back()">Скасування</button>
   </div>
   <div class="flex flex-row mt-3 justify-end">
     <span>
       <a routerLink="/registration" class="text-sm text-gray-500"
-        >Создать аккаунт?</a
+        >Створити обліковий запис?</a
       >
     </span>
   </div>

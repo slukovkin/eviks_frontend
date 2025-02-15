@@ -1,47 +1,47 @@
-import { Routes } from '@angular/router'
-import { LoginComponent } from './modules/auth/components/login/login.component'
-import { RegistrationComponent } from './modules/auth/components/registration/registration.component'
-import { ProductsComponent } from './modules/product/components/products/products.component'
-import { ProductFormComponent } from './modules/product/components/product-form/product-form.component'
-import { DocumentsComponent } from './modules/documents/components/documents/documents.component'
-import { SettingsComponent } from './modules/settings/components/settings/settings.component'
-import { IncomingInvoiceComponent } from './modules/documents/components/incoming-invoice/incoming-invoice.component'
-import { OutgoingInvoiceComponent } from './modules/documents/components/outgoing-invoice/outgoing-invoice.component'
-import { CustomerComponent } from './modules/customer/components/customer/customer.component'
-import { StoresComponent } from './modules/store/components/stores/stores.component'
-import { CurrencyComponent } from './modules/currency/components/currency/currency.component'
-import { ReportComponent } from './modules/report/components/report/report.component'
-import { CategoryComponent } from './modules/category/components/category/category.component'
-import { BasketComponent } from './client/components/basket/basket.component'
-import { OrderListComponent } from './modules/order/components/order-list/order-list.component'
-import { OrderComponent } from './client/components/order/order.component'
-import { OrderDetailComponent } from './modules/order/components/order-detail/order-detail.component'
-import { authGuard } from './shared/guards/auth.guard'
-import { HomeComponent } from './modules/home/components/home/home.component'
-import { ShopComponent } from './client/components/shop/shop.component'
-import { StockComponent } from './client/components/stock/stock.component'
-import { SaleComponent } from './client/components/sale/sale.component'
-import { FavoritesComponent } from './client/components/favorites/favorites.component'
-import { NewsComponent } from './client/components/news/news.component'
-import { CatalogsComponent } from './client/components/catalogs/catalogs.component'
-import { BrandsComponent } from './client/components/brands/brands.component'
-import { SelectProductComponent } from './modules/documents/components/select-product/select-product.component'
-import {
-  SelectEditProductComponent,
-} from './modules/documents/components/select-edit-product/select-edit-product.component'
-import { UploadComponent } from './modules/upload/components/upload/upload.component'
-import { CrossComponent } from './modules/cross/components/cross/cross.component'
-import { ViewIncomingComponent } from './modules/documents/components/view-incoming/view-incoming.component'
-import { ViewOutgoingComponent } from './modules/documents/components/view-outgoing/view-outgoing.component'
-import { ManufacturerComponent } from './modules/manufacturer/components/manufacturer/manufacturer.component'
-import {
-  ManufacturerFormComponent,
-} from './modules/manufacturer/components/manufacturer-form/manufacturer-form.component'
-import { CountryComponent } from './modules/country/components/country/country.component'
-import { CountryFormComponent } from './modules/country/components/country-form/country-form.component'
+import { Routes } from '@angular/router';
+import { LoginComponent } from './modules/auth/components/login/login.component';
+import { RegistrationComponent } from './modules/auth/components/registration/registration.component';
+import { ProductsComponent } from './modules/product/components/products/products.component';
+import { ProductFormComponent } from './modules/product/components/product-form/product-form.component';
+import { DocumentsComponent } from './modules/documents/components/documents/documents.component';
+import { SettingsComponent } from './modules/settings/components/settings/settings.component';
+import { IncomingInvoiceComponent } from './modules/documents/components/incoming-invoice/incoming-invoice.component';
+import { OutgoingInvoiceComponent } from './modules/documents/components/outgoing-invoice/outgoing-invoice.component';
+import { CustomerComponent } from './modules/customer/components/customer/customer.component';
+import { StoresComponent } from './modules/store/components/stores/stores.component';
+import { CurrencyComponent } from './modules/currency/components/currency/currency.component';
+import { ReportComponent } from './modules/report/components/report/report.component';
+import { CategoryComponent } from './modules/category/components/category/category.component';
+import { BasketComponent } from './client/components/basket/basket.component';
+import { OrderListComponent } from './modules/order/components/order-list/order-list.component';
+import { OrderComponent } from './client/components/order/order.component';
+import { OrderDetailComponent } from './modules/order/components/order-detail/order-detail.component';
+import { authGuard } from './shared/guards/auth.guard';
+import { HomeComponent } from './modules/home/components/home/home.component';
+import { ShopComponent } from './client/components/shop/shop.component';
+import { StockComponent } from './client/components/stock/stock.component';
+import { SaleComponent } from './client/components/sale/sale.component';
+import { FavoritesComponent } from './client/components/favorites/favorites.component';
+import { NewsComponent } from './client/components/news/news.component';
+import { CatalogsComponent } from './client/components/catalogs/catalogs.component';
+import { BrandsComponent } from './client/components/brands/brands.component';
+import { SelectProductComponent } from './modules/documents/components/select-product/select-product.component';
+import { SelectEditProductComponent } from './modules/documents/components/select-edit-product/select-edit-product.component';
+import { UploadComponent } from './modules/upload/components/upload/upload.component';
+import { CrossComponent } from './modules/cross/components/cross/cross.component';
+import { ViewIncomingComponent } from './modules/documents/components/view-incoming/view-incoming.component';
+import { ViewOutgoingComponent } from './modules/documents/components/view-outgoing/view-outgoing.component';
+import { ManufacturerComponent } from './modules/manufacturer/components/manufacturer/manufacturer.component';
+import { ManufacturerFormComponent } from './modules/manufacturer/components/manufacturer-form/manufacturer-form.component';
+import { CountryComponent } from './modules/country/components/country/country.component';
+import { CountryFormComponent } from './modules/country/components/country-form/country-form.component';
+import { ProfileComponent } from './client/components/profile/profile.component';
+import { ProfileAvatarComponent } from './client/components/profile/profile-avatar/profile-avatar.component';
+import { ProfileOrdersComponent } from './client/components/profile/profile-orders/profile-orders.component';
+import { ProfileContactsComponent } from './client/components/profile/profile-contacts/profile-contacts.component';
+import { ProfileAccountsComponent } from './client/components/profile/profile-accounts/profile-accounts.component';
 
 export const routes: Routes = [
-
   {
     path: '',
     component: ShopComponent,
@@ -99,6 +99,28 @@ export const routes: Routes = [
   {
     path: 'order-detail',
     component: OrderDetailComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    children: [
+      {
+        path: 'profile-avatar',
+        component: ProfileAvatarComponent,
+      },
+      {
+        path: 'profile-orders',
+        component: ProfileOrdersComponent,
+      },
+      {
+        path: 'profile-contacts',
+        component: ProfileContactsComponent,
+      },
+      {
+        path: 'profile-accounts',
+        component: ProfileAccountsComponent,
+      },
+    ],
   },
   {
     path: 'home',
@@ -226,4 +248,4 @@ export const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full',
   },
-]
+];

@@ -9,10 +9,6 @@
     </div>
     <nav>
       <a class="header-btn cursor-pointer" (click)="exit()">Выход</a>
-      <!--        <button mat-raised-button (click)="exit()" class="px-2 inline-flex">-->
-      <!--          <span>Выход </span>-->
-      <!--          <fa-icon [icon]="logout" class="px-2"></fa-icon>-->
-      <!--        </button>-->
     </nav>
   </header>
   <main>
@@ -22,7 +18,7 @@
         <app-sidebar></app-sidebar>
       </div>
       } @if (isSideBarShow()) {
-      <div class="hidden lg:w-5/6">
+      <div class="w-5/6">
         <router-outlet></router-outlet>
       </div>
       } @else {

@@ -92,7 +92,7 @@ export class SidebarComponent {
   ]
 
   onRoute(route: string) {
-    this.app.showSideBar()
+    // this.app.showSideBar()
     this.router.navigate([route]).then()
   }
 }

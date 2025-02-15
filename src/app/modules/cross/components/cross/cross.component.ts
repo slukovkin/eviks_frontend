@@ -1,19 +1,22 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core'
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
-import { MatSort, MatSortModule } from '@angular/material/sort'
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
-import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { CrossService } from '../../services/cross.service'
-import { MatProgressSpinner } from '@angular/material/progress-spinner'
-import { CrossEditComponent, ICrossCreateData } from '../cross-edit/cross-edit.component'
-import { NgIf } from '@angular/common'
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CrossService } from '../../services/cross.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import {
+  CrossEditComponent,
+  ICrossCreateData,
+} from '../cross-edit/cross-edit.component';
+import { NgIf } from '@angular/common';
 
 export interface ICross {
-  id?: number
-  group: string
-  code: string
-  origin: string
+  id?: number;
+  group: string;
+  code: string;
+  origin: string;
 }
 
 @Component({
@@ -21,23 +24,30 @@ export interface ICross {
   styleUrl: './cross.component.scss',
   templateUrl: './cross.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatProgressSpinner, CrossEditComponent, NgIf],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatProgressSpinner,
+    CrossEditComponent,
+    NgIf,
+  ],
 })
 export class CrossComponent implements AfterViewInit {
+  displayedColumns: string[] = ['group', 'code', 'origin'];
+  dataSource!: MatTableDataSource<ICross>;
 
-  displayedColumns: string[] = ['group', 'code', 'origin']
-  dataSource!: MatTableDataSource<ICross>
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator
-  @ViewChild(MatSort) sort!: MatSort
+  error = '';
+  cross_table: ICross[] = [];
+  showCrossEdit = false;
 
-  error = ''
-  cross_table: ICross[] = []
-  showCrossEdit = false
-
-  constructor(
-    private crossService: CrossService,
-  ) {
+  constructor(private crossService: CrossService) {
+    this.cross_table = this.crossService.cross_table$();
   }
 
   onCrossDataFromForm(value: ICrossCreateData) {
@@ -45,28 +55,28 @@ export class CrossComponent implements AfterViewInit {
       group: '000',
       code: value.code,
       origin: value.origin,
-    }
-    this.crossService.createNewCross(cross)
-    this.showCrossEdit = false
+    };
+    this.crossService.createNewCross(cross);
+    this.showCrossEdit = false;
   }
 
   ngAfterViewInit() {
-    this.crossService.getAllCross()
-    this.dataSource = new MatTableDataSource(this.crossService.cross_table$())
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
+    this.crossService.getAllCross();
+    this.dataSource = new MatTableDataSource(this.crossService.cross_table$());
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value
-    this.dataSource.filter = filterValue.trim().toLowerCase()
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage()
+      this.dataSource.paginator.firstPage();
     }
   }
 
   createNewCross() {
-    this.showCrossEdit = true
+    this.showCrossEdit = true;
   }
 }
