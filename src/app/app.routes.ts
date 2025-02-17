@@ -36,10 +36,10 @@ import { ManufacturerFormComponent } from './modules/manufacturer/components/man
 import { CountryComponent } from './modules/country/components/country/country.component';
 import { CountryFormComponent } from './modules/country/components/country-form/country-form.component';
 import { ProfileComponent } from './client/components/profile/profile.component';
-import { ProfileAvatarComponent } from './client/components/profile/profile-avatar/profile-avatar.component';
 import { ProfileOrdersComponent } from './client/components/profile/profile-orders/profile-orders.component';
 import { ProfileContactsComponent } from './client/components/profile/profile-contacts/profile-contacts.component';
 import { ProfileAccountsComponent } from './client/components/profile/profile-accounts/profile-accounts.component';
+import { ProfileSolutionsComponent } from './client/components/profile/profile-solutions/profile-solutions.component';
 
 export const routes: Routes = [
   {
@@ -105,12 +105,12 @@ export const routes: Routes = [
     component: ProfileComponent,
     children: [
       {
-        path: 'profile-avatar',
-        component: ProfileAvatarComponent,
-      },
-      {
         path: 'profile-orders',
         component: ProfileOrdersComponent,
+      },
+      {
+        path: 'profile-solutions',
+        component: ProfileSolutionsComponent,
       },
       {
         path: 'profile-contacts',
