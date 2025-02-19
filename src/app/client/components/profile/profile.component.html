@@ -1,5 +1,5 @@
 <div class="flex w-screen-xl gap-1">
-  <div class="md:w-full lg:w-1/6 h-[60vh]">
+  <div class="lg:w-1/6 lg:h-[60vh]">
     <button
       mat-raised-button
       (click)="routeAvatar('profile/profile-orders')"
@@ -29,7 +29,8 @@
       CONTACTS
     </button>
   </div>
-  <div class="w-5/6 border border-teal-700">
+  <div class="w-5/6 lg:w-full border border-teal-700">
+    <h2>Account</h2>
     <router-outlet></router-outlet>
   </div>
 </div>
